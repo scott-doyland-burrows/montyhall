@@ -4,6 +4,10 @@ import random
 num_games = int(input("Number of games: "))
 num_doors = int(input("Number of doors: "))
 
+if num_doors < 2:
+    print("Must enter 2 or more doors")
+    exit()
+
 wins_switched = 0
 wins_stayed = 0
 
