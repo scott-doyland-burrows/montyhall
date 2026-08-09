@@ -20,22 +20,13 @@ for game in range(num_games):
         # Keep the prize door
         other_door = prize_door
 
-    # Randomly switch or stay
-    switched = random.choice([True, False])
-    final_door = other_door if switched else chosen_door
-
-    # Check if won
-    won = (final_door == prize_door)
-
-    if won:
-        if switched:
-            wins_switched += 1
-        else:
-            wins_stayed += 1
+    # Test both strategies
+    if chosen_door == prize_door:
+        wins_stayed += 1
+    else:
+        wins_switched += 1
 
 print(f"\nResults after {num_games} games:")
-print(f"Wins when switched: {wins_switched}")
-print(f"Wins when stayed: {wins_stayed}")
+print(f"Wins when switched: {wins_switched} ({wins_switched / num_games:.1%})")
+print(f"Wins when stayed: {wins_stayed} ({wins_stayed / num_games:.1%})")
 print(f"Total wins: {wins_switched + wins_stayed}")
-print(f"Win rate when switched: {wins_switched / (num_games / 2):.1%}")
-print(f"Win rate when stayed: {wins_stayed / (num_games / 2):.1%}")
