@@ -1,4 +1,4 @@
-"""Monyt Hall"""
+"""Monty Hall"""
 import random
 
 num_games = int(input("Number of games: "))
