@@ -29,4 +29,3 @@ for game in range(num_games):
 print(f"\nResults after {num_games} games:")
 print(f"Wins when switched: {wins_switched} ({wins_switched / num_games:.1%})")
 print(f"Wins when stayed: {wins_stayed} ({wins_stayed / num_games:.1%})")
-print(f"Total wins: {wins_switched + wins_stayed}")
