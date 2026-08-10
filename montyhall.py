@@ -1,8 +1,6 @@
 """Monty Hall problem simulator."""
 import sys
-
 import numpy as np
-
 
 BATCH_SIZE = 10_000_000
 
