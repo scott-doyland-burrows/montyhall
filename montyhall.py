@@ -1,8 +1,20 @@
 """Monty Hall problem simulator."""
 import sys
+from multiprocessing import Pool, cpu_count
+
 import numpy as np
 
+
 BATCH_SIZE = 10_000_000
+
+
+def run_batch(args):
+    """Run a batch of games and return wins_stayed count."""
+    batch_size, doors = args
+    prize_doors = np.random.randint(0, doors, batch_size)
+    chosen_doors = np.random.randint(0, doors, batch_size)
+    return np.sum(chosen_doors == prize_doors)
+
 
 num_games = int(input("Number of games: "))
 num_doors = int(input("Number of doors: "))
@@ -11,15 +23,17 @@ if num_doors < 2:
     print("Must enter 2 or more doors")
     sys.exit()
 
-# Process in batches to avoid memory issues
-wins_stayed = 0
-wins_switched = 0
-
+# Create batch arguments
+batches = []
 for start in range(0, num_games, BATCH_SIZE):
     current_batch = min(BATCH_SIZE, num_games - start)
-    prize_doors = np.random.randint(0, num_doors, current_batch)
-    chosen_doors = np.random.randint(0, num_doors, current_batch)
-    wins_stayed += np.sum(chosen_doors == prize_doors)
+    batches.append((current_batch, num_doors))
+
+# Process batches in parallel
+with Pool(cpu_count()) as pool:
+    results = pool.map(run_batch, batches)
+
+wins_stayed = sum(results)
 
 wins_switched = num_games - wins_stayed
 
